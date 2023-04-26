@@ -26,5 +26,5 @@ int compare_double(const void *double1_pointer, const void *double2_pointer)
 {
   if (*(double *)double1_pointer == *(double *)double2_pointer)
     return 0;
-  return (*(double *)double1_pointer < *(float *)double2_pointer) ? -1 : 1;
+  return (*(double *)double1_pointer < *(double *)double2_pointer) ? -1 : 1;
 }
