@@ -22,9 +22,22 @@ int compare_int(const void *int1_pointer, const void *int2_pointer)
   return (*(int *)int1_pointer < *(int *)int2_pointer) ? -1 : 1;
 }
 
-int compare_double(const void *double1_pointer, const void *double2_pointer)
+int compare_string(const void *p_string1, const void *p_string2)
 {
-  if (*(double *)double1_pointer == *(double *)double2_pointer)
+	while(*(char *)p_string1 != '\0' && *(char *)p_string2 != '\0') {
+		if (*(char *)p_string1 > *(char *)p_string2)
+			return 1;
+		else if (*(char *)p_string1 < *(char *)p_string2)
+			return -1;
+		else {
+			p_string1++;
+			p_string2++;
+		}
+	}
+	if (*(char *)p_string1 == *(char *)p_string2)
     return 0;
-  return (*(double *)double1_pointer < *(double *)double2_pointer) ? -1 : 1;
+	else if (*(char *)p_string1 == '\0')
+		return -1;
+	else return 1;
 }
+
