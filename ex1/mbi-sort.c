@@ -15,11 +15,22 @@ int binary_search(void *base, size_t size, int (*compar)(const void *, const voi
   }
 }
 
-int compare_int(const void *int1_pointer, const void *int2_pointer)
+int compare_int(const void *p_int1, const void *p_int2)
 {
-  if (*(int *)int1_pointer == *(int *)int2_pointer)
+	if (*(int *)p_int1 == *(int *)p_int2)
+		return 0;
+	else if (*(int *)p_int1 > *(int *)p_int2)
+		return 1;
+	else return -1;
+}
+
+int compare_double(const void *p_double1, const void *p_double2)
+{
+	if (*(double *)p_double1 == *(double *)p_double2)
     return 0;
-  return (*(int *)int1_pointer < *(int *)int2_pointer) ? -1 : 1;
+	else if (*(double *)p_double1 > *(double *)p_double2)
+		return 1;
+	else return -1;
 }
 
 int compare_string(const void *p_string1, const void *p_string2)
