@@ -3,15 +3,17 @@
 
 int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int left_index, int right_index, void *elem)
 {
-  int m;
-  if(left_index > right_index)
-    return left_index;
-  else {
-    m = (left_index + right_index) / 2;
-    if (compar(elem, (base + m*size)) <= -1)
-      return binary_search(base, size, compar, left_index, m - 1, elem);
-    else
+	if (right_index <= left_index) {
+		if(compar(elem, base + left_index * size) > 0)
+			return left_index + 1;
+		else return left_index;
+	} else {
+		int m = (left_index + right_index) / 2;
+		if (compar(elem, base + m * size) == 0)
+			return m + 1;
+		if (compar(elem, base + m * size) > 0)
       return binary_search(base, size, compar, m + 1, right_index, elem);
+		else return binary_search(base, size, compar, left_index, m - 1, elem);
   }
 }
 
