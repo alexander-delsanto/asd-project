@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "mbi-sort.h"
 
 int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int left_index, int right_index, void *elem)
@@ -12,9 +13,25 @@ int binary_search(void *base, size_t size, int (*compar)(const void *, const voi
 		if (compar(elem, base + m * size) == 0)
 			return m + 1;
 		if (compar(elem, base + m * size) > 0)
-      return binary_search(base, size, compar, m + 1, right_index, elem);
+			return binary_search(base, size, compar, m + 1, right_index, elem);
 		else return binary_search(base, size, compar, left_index, m - 1, elem);
-  }
+	}
+}
+
+void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
+{
+	int i, j, k;
+	char * temp;
+	for (i = 1; i < nitems; i++) {
+		j = binary_search(base, size, compar, 0, i-1, base + i * size);
+		k = i;
+		while (k > j) {
+			memmove((void *) temp, base + (k - 1) * size, size);
+			memmove(base + (k - 1) * size, base + k * size, size);
+			memmove(base + k * size, (void * ) temp, size);
+			k--;
+		}
+	}
 }
 
 int compare_int(const void *p_int1, const void *p_int2)
@@ -29,7 +46,7 @@ int compare_int(const void *p_int1, const void *p_int2)
 int compare_double(const void *p_double1, const void *p_double2)
 {
 	if (*(double *)p_double1 == *(double *)p_double2)
-    return 0;
+		return 0;
 	else if (*(double *)p_double1 > *(double *)p_double2)
 		return 1;
 	else return -1;
@@ -48,7 +65,7 @@ int compare_string(const void *p_string1, const void *p_string2)
 		}
 	}
 	if (*(char *)p_string1 == *(char *)p_string2)
-    return 0;
+		return 0;
 	else if (*(char *)p_string1 == '\0')
 		return -1;
 	else return 1;
