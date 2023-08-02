@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "../include/mbi-sort.h"
+#include "include/mbi-sort.h"
 
 int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int left_index, int right_index, void *elem)
 {
