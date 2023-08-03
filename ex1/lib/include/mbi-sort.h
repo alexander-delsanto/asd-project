@@ -2,7 +2,7 @@
 
 #ifndef _MBI_SORT_H
 #define _MBI_SORT_H
-#endif
+
 
 
 //void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t k, int (*compar)(const void*, const void*));
@@ -21,3 +21,4 @@ int compare_double(const void *pointer1, const void *pointer2);
 
 int compare_string(const void *pointer1, const void *pointer2);
 
+#endif
