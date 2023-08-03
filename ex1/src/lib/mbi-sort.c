@@ -2,6 +2,10 @@
 #include <string.h>
 #include "include/mbi-sort.h"
 
+// Prototyes
+int binary_search(void *, size_t, int (*)(const void *, const void*), int, int, void *);
+void binary_insertion_sort(void *, size_t, size_t, int (*)(const void *, const void*));
+
 int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int left_index, int right_index, void *elem)
 {
 	if (right_index <= left_index) {
