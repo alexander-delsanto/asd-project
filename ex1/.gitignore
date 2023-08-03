@@ -1,5 +1,6 @@
-# Object files
-*.o
+# Ignore certain directories
+bin
+data
+build
 
-# Record files
-*.csv
+
