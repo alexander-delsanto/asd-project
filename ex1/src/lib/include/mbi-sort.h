@@ -15,10 +15,4 @@ int binary_search(void *base, size_t size, int (*compar)(const void *, const voi
 
 void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*));
 
-int compare_int(const void *pointer1, const void *pointer2);
-
-int compare_double(const void *pointer1, const void *pointer2);
-
-int compare_string(const void *pointer1, const void *pointer2);
-
 #endif
