@@ -57,3 +57,8 @@ int compare_record_string_field(const void *string1_p, const void *string2_p)
 	record_t *rec2_p = (record_t *)string2_p;
 	return strcmp(rec1_p->string_field, rec2_p->string_field);
 }
+
+int main(/*int argc, char *argv[]*/)
+{
+	exit(EXIT_SUCCESS);
+}
