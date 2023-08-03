@@ -22,7 +22,7 @@ void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)
 {
 	unsigned long i;
 	int j, k;
-	char * temp = NULL;
+	char * temp = calloc(1, size);
 	for (i = 1; i < nitems; i++) {
 		j = binary_search(base, size, compar, 0, i-1, base + i * size);
 		k = i;
