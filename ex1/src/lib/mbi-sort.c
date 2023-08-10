@@ -23,8 +23,7 @@ void merge_sort(void *base, size_t size, size_t k, int (*compar)(const void*, co
 			binary_insertion_sort(base + l * size, length, size, compar);
 			return;
 		}
-
-		unsigned long m = (l + r) / 2;
+		int m = (l + r) / 2;
 		merge_sort(base, size, k, compar, l, m);
 		merge_sort(base, size, k, compar, m + 1, r);
 		merge(base, size, compar, l, m, r);
