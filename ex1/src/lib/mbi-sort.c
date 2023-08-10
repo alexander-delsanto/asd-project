@@ -22,11 +22,12 @@ int binary_search(void *base, size_t size, int (*compar)(const void *, const voi
 		else return left_index;
 	} else {
 		int m = (left_index + right_index) / 2;
-		if (compar(elem, base + m * size) == 0)
+		int compare_res = compar(elem, base + m * size);
+		if (compare_res == 0)
 			return m + 1;
-		if (compar(elem, base + m * size) > 0)
+		if (compare_res > 0)
 			return binary_search(base, size, compar, m + 1, right_index, elem);
-		else return binary_search(base, size, compar, left_index, m - 1, elem);
+		return binary_search(base, size, compar, left_index, m - 1, elem);
 	}
 }
 
