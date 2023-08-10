@@ -3,48 +3,16 @@
 #include "include/mbi-sort.h"
 
 // Prototyes
-int binary_search(void *, size_t, int (*)(const void *, const void*), int, int, void *);
-void binary_insertion_sort(void *, size_t, size_t, int (*)(const void *, const void*));
+void merge_binary_insertion_sort(void *, size_t, size_t, size_t, int (*)(const void*, const void*));
 void merge_sort(void *, size_t, size_t, int (*)(const void*, const void*), int, int);
 void merge(void *, size_t, int (*)(const void*, const void*), int, int, int);
+void binary_insertion_sort(void *, size_t, size_t, int (*)(const void *, const void*));
+int binary_search(void *, size_t, int (*)(const void *, const void*), int, int, void *);
 
 
 void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t k, int (*compar)(const void*, const void*))
 {
 	merge_sort(base, size, k, compar, 0, nitems - 1);
-}
-
-int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int left_index, int right_index, void *elem)
-{
-	if (right_index <= left_index) {
-		if(compar(elem, base + left_index * size) > 0)
-			return left_index + 1;
-		else return left_index;
-	} else {
-		int m = (left_index + right_index) / 2;
-		int compare_res = compar(elem, base + m * size);
-		if (compare_res == 0)
-			return m + 1;
-		if (compare_res > 0)
-			return binary_search(base, size, compar, m + 1, right_index, elem);
-		return binary_search(base, size, compar, left_index, m - 1, elem);
-	}
-}
-
-void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
-{
-	int i, j, k;
-	void *temp = malloc(size);
-	for (i = 1; i < nitems; i++) {
-		j = binary_search(base, size, compar, 0, i-1, base + i * size);
-		k = i;
-		while (k > j) {
-			memcpy((void *) temp, base + (k - 1) * size, size);
-			memcpy(base + (k - 1) * size, base + k * size, size);
-			memcpy(base + k * size, (void * ) temp, size);
-			k--;
-		}
-	}
 }
 
 void merge_sort(void *base, size_t size, size_t k, int (*compar)(const void*, const void*), int l, int r)
@@ -106,4 +74,37 @@ void merge(void *base, size_t size, int (*compar)(const void*, const void*), int
 	free(left_arr);
 	free(right_arr);
 	return;
+}
+
+void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
+{
+	int i, j, k;
+	void *temp = malloc(size);
+	for (i = 1; i < nitems; i++) {
+		j = binary_search(base, size, compar, 0, i-1, base + i * size);
+		k = i;
+		while (k > j) {
+			memcpy((void *) temp, base + (k - 1) * size, size);
+			memcpy(base + (k - 1) * size, base + k * size, size);
+			memcpy(base + k * size, (void * ) temp, size);
+			k--;
+		}
+	}
+}
+
+int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int left_index, int right_index, void *elem)
+{
+	if (right_index <= left_index) {
+		if(compar(elem, base + left_index * size) > 0)
+			return left_index + 1;
+		else return left_index;
+	} else {
+		int m = (left_index + right_index) / 2;
+		int compare_res = compar(elem, base + m * size);
+		if (compare_res == 0)
+			return m + 1;
+		if (compare_res > 0)
+			return binary_search(base, size, compar, m + 1, right_index, elem);
+		return binary_search(base, size, compar, left_index, m - 1, elem);
+	}
 }
