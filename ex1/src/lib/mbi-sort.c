@@ -38,3 +38,56 @@ void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)
 		}
 	}
 }
+
+void merge_sort(void *base, size_t size, int (*compar)(const void*, const void*), unsigned long l, unsigned long r)
+{
+	if(l < r){
+		unsigned long m = (l + r) / 2;
+		merge_sort(base, size, compar, l, m);
+		merge_sort(base, size, compar, m + 1, r);
+		merge(base, size, compar, l, m, r);
+	}
+}
+
+void merge(void *base, size_t size, int (*compar)(const void*, const void*), int l, int m, int r)
+{
+	unsigned long i, j, k;
+	unsigned long left_length = m - l + 1;
+	unsigned long right_length = r - m;
+	void *left_arr = calloc(left_length, size);
+	void *right_arr = calloc(right_length, size);
+	for(i = 0; i < left_length; i++){
+		memcpy(left_arr + (i * size), base + ((l + i) * size), size);
+	}
+	for(i = 0; i < right_length; i++){
+		memcpy(right_arr + (i * size), base + ((m + 1 + i) * size), size);
+	}
+
+	i = 0;
+	j = 0;
+	k = l;
+	while(i < left_length && j < right_length){
+		if(compar(left_arr + i * size, right_arr + j * size) <= 0){
+			memcpy(base + k * size, left_arr + i * size, size);
+			i++;
+		}else{
+			memcpy(base + k * size, right_arr + j * size, size);
+			j++;
+		}
+		k++;
+	}
+
+	while(i < left_length){
+		memcpy(base + k * size, left_arr + i * size, size);
+		i++;
+		k++;
+	}
+
+	while(j < right_length){
+		memcpy(base + k * size, right_arr + j * size, size);
+		j++;
+		k++;
+	}
+
+	return;
+}
