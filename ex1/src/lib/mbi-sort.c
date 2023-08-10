@@ -89,5 +89,7 @@ void merge(void *base, size_t size, int (*compar)(const void*, const void*), int
 		k++;
 	}
 
+	free(left_arr);
+	free(right_arr);
 	return;
 }
