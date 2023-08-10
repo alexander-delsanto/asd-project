@@ -33,16 +33,15 @@ int binary_search(void *base, size_t size, int (*compar)(const void *, const voi
 
 void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
 {
-	unsigned long i;
-	int j, k;
-	char * temp = calloc(1, size);
+	int i, j, k;
+	void *temp = malloc(size);
 	for (i = 1; i < nitems; i++) {
 		j = binary_search(base, size, compar, 0, i-1, base + i * size);
 		k = i;
 		while (k > j) {
-			memmove((void *) temp, base + (k - 1) * size, size);
-			memmove(base + (k - 1) * size, base + k * size, size);
-			memmove(base + k * size, (void * ) temp, size);
+			memcpy((void *) temp, base + (k - 1) * size, size);
+			memcpy(base + (k - 1) * size, base + k * size, size);
+			memcpy(base + k * size, (void * ) temp, size);
 			k--;
 		}
 	}
