@@ -5,6 +5,10 @@
 // Prototyes
 int binary_search(void *, size_t, int (*)(const void *, const void*), int, int, void *);
 void binary_insertion_sort(void *, size_t, size_t, int (*)(const void *, const void*));
+void merge_sort(void *, size_t, int (*)(const void*, const void*), int, int);
+void merge(void *, size_t, int (*)(const void*, const void*), int, int, int);
+
+
 
 int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int left_index, int right_index, void *elem)
 {

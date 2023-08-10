@@ -15,4 +15,6 @@ int binary_search(void *base, size_t size, int (*compar)(const void *, const voi
 
 void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*));
 
+void merge_sort(void *base, size_t size, int (*compar)(const void*, const void*), int l, int r);
+
 #endif
