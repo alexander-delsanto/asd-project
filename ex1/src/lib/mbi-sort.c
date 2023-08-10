@@ -39,7 +39,7 @@ void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)
 	}
 }
 
-void merge_sort(void *base, size_t size, int (*compar)(const void*, const void*), unsigned long l, unsigned long r)
+void merge_sort(void *base, size_t size, int (*compar)(const void*, const void*), int l, int r)
 {
 	if(l < r){
 		unsigned long m = (l + r) / 2;
@@ -51,11 +51,11 @@ void merge_sort(void *base, size_t size, int (*compar)(const void*, const void*)
 
 void merge(void *base, size_t size, int (*compar)(const void*, const void*), int l, int m, int r)
 {
-	unsigned long i, j, k;
-	unsigned long left_length = m - l + 1;
-	unsigned long right_length = r - m;
-	void *left_arr = calloc(left_length, size);
-	void *right_arr = calloc(right_length, size);
+	int i, j, k;
+	int left_length = m - l + 1;
+	int right_length = r - m;
+	void *left_arr = malloc(left_length * size);
+	void *right_arr = malloc(right_length * size);
 	for(i = 0; i < left_length; i++){
 		memcpy(left_arr + (i * size), base + ((l + i) * size), size);
 	}
