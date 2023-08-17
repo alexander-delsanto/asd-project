@@ -15,7 +15,7 @@ typedef struct {
 	char *string_field;
 	int integer_field;
 	double double_field;
-} record_t;
+} Record;
 
 int compare_record_int_field(const void *int1_p, const void *int2_p)
 {
@@ -23,8 +23,8 @@ int compare_record_int_field(const void *int1_p, const void *int2_p)
 		dprintf(2, "compare_record_int_field: the parameters cannot be null pointers\n");
 		exit(EXIT_FAILURE);
 	}
-	record_t *rec1_p = (record_t *)int1_p;
-	record_t *rec2_p = (record_t *)int2_p;
+	Record *rec1_p = (Record *)int1_p;
+	Record *rec2_p = (Record *)int2_p;
 	if (rec1_p->integer_field == rec2_p->integer_field)
 		return 0;
 	else if (rec1_p->integer_field > rec2_p->integer_field)
@@ -38,8 +38,8 @@ int compare_record_double_field(const void *double1_p, const void *double2_p)
 		dprintf(2, "compare_record_double_field: the parameters cannot be null pointers\n");
 		exit(EXIT_FAILURE);
 	}
-	record_t *rec1_p = (record_t *)double1_p;
-	record_t *rec2_p = (record_t *)double2_p;
+	Record *rec1_p = (Record *)double1_p;
+	Record *rec2_p = (Record *)double2_p;
 	if (rec1_p->double_field == rec2_p->double_field)
 		return 0;
 	else if (rec1_p->double_field > rec2_p->double_field)
@@ -53,8 +53,8 @@ int compare_record_string_field(const void *string1_p, const void *string2_p)
 		dprintf(2, "compare_record_string_field: the parameters cannot be null pointers\n");
 		exit(EXIT_FAILURE);
 	}
-	record_t *rec1_p = (record_t *)string1_p;
-	record_t *rec2_p = (record_t *)string2_p;
+	Record *rec1_p = (Record *)string1_p;
+	Record *rec2_p = (Record *)string2_p;
 	return strcmp(rec1_p->string_field, rec2_p->string_field);
 }
 
