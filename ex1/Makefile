@@ -1,6 +1,7 @@
 # Code directories and binary file name
 _BINARY=main_ex1
 CODEDIRS=src src/lib
+TESTDIRS=src/test src/test/unity
 BUILD=build
 BIN=bin
 
@@ -13,6 +14,7 @@ CCOMPILE=$(CC) $(CFLAGS)
 BINARY=$(addprefix $(BIN)/, $(_BINARY))
 CFILES=$(foreach D,$(CODEDIRS),$(wildcard $(D)/*.c))
 OBJECTS=$(foreach D,$(CODEDIRS), $(patsubst $(D)/%.c, $(BUILD)/%.o, $(wildcard $(D)/*.c)))
+TESTS=$(foreach D,$(TESTDIR),$(wildcard $(D)/*.c))
 
 # Main
 all: $(BINARY)
@@ -34,6 +36,12 @@ $(BUILD)/%.o: src/%.c | $(BUILD)
 
 $(BUILD)/%.o: src/lib/%.c | $(BUILD)
 	$(CCOMPILE) -c $^ -o $@
+
+# Unit testing
+test: $(BIN)
+	$(CC) src/lib/mbi-sort.c src/test/unity/unity.c src/test/sort-test.c -o $(BIN)/test
+	./bin/test
+
 
 # General use
 recompile: clean all
