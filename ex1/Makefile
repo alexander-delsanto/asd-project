@@ -1,7 +1,6 @@
 # Code directories and binary file name
 _BINARY=main_ex1
 CODEDIRS=src src/lib
-TESTDIRS=src/test src/test/unity
 BUILD=build
 BIN=bin
 
@@ -14,7 +13,6 @@ CCOMPILE=$(CC) $(CFLAGS)
 BINARY=$(addprefix $(BIN)/, $(_BINARY))
 CFILES=$(foreach D,$(CODEDIRS),$(wildcard $(D)/*.c))
 OBJECTS=$(foreach D,$(CODEDIRS), $(patsubst $(D)/%.c, $(BUILD)/%.o, $(wildcard $(D)/*.c)))
-TESTS=$(foreach D,$(TESTDIR),$(wildcard $(D)/*.c))
 
 # Main
 all: $(BINARY)
