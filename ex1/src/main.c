@@ -3,6 +3,14 @@
 #include <string.h>
 #include "lib/include/mbi-sort.h"
 
+// Data structure used to load csv file
+typedef struct {
+    int index;
+    char *string_field;
+    int integer_field;
+    double double_field;
+} Record;
+
 // Prototypes
 int compare_record_int_field(const void *, const void *);
 int compare_record_int_field(const void *, const void *);
@@ -11,17 +19,6 @@ void print_record_to_file(FILE *, Record *, size_t);
 void free_record(Record *, size_t);
 size_t read_record(FILE *, Record **);
 void sort_records(FILE *, FILE *, size_t, size_t);
-
-
-
-
-// Data structure used to load csv file
-typedef struct {
-    int index;
-    char *string_field;
-    int integer_field;
-    double double_field;
-} Record;
 
 int compare_record_int_field(const void *int1_p, const void *int2_p)
 {
