@@ -37,7 +37,7 @@ $(BUILD)/%.o: src/lib/%.c | $(BUILD)
 
 # Unit testing
 test: $(BIN)
-	$(CC) src/lib/mbi-sort.c src/test/unity/unity.c src/test/sort-test.c -o $(BIN)/test
+	$(CC) src/lib/mbi_sort.c src/test/unity/unity.c src/test/sort_test.c -o $(BIN)/test
 	./bin/test
 
 
