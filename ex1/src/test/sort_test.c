@@ -1,5 +1,4 @@
-#include <string.h>
-#include "../lib/include/mbi-sort.h"
+#include "../lib/include/mbi_sort.h"
 #include "unity/unity.h"
 
 int compare_int(const void *int1_pointer, const void *int2_pointer)

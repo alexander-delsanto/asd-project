@@ -1,5 +1,5 @@
 #include <string.h>
-#include "lib/include/mbi-sort.h"
+#include "lib/include/mbi_sort.h"
 #include "record.h"
 
 // Data structure used to load csv file
