@@ -1,5 +1,5 @@
-#include "../lib/include/mbi_sort.h"
-#include "unity/unity.h"
+#include "../../ex1/lib/include/mbi_sort.h"
+#include "../../../resources/C/Unity/unity.h"
 
 int compare_int(const void *int1_pointer, const void *int2_pointer)
 {
@@ -30,10 +30,10 @@ void tearDown(void)
     free(int_arr);
 }
 
-void test_insertion_sort_null_array(void)
+void test_mbi_sort_null_array_k_zero(void)
 {
     int *a = NULL;
-    binary_insertion_sort((void *) a, 0, 0, compare_int);
+    merge_binary_insertion_sort((void *) a, 0, 0, 0, compare_int);
     TEST_ASSERT_NULL(a);
 }
 
@@ -86,7 +86,7 @@ void test_merge_binary_insertion_sort(void)
 int main(void)
 {
     UNITY_BEGIN();
-    RUN_TEST(test_insertion_sort_null_array);
+    RUN_TEST(test_mbi_sort_null_array_k_zero);
     RUN_TEST(test_insertion_sort_empty_array);
     RUN_TEST(test_insertion_sort_one_element_array);
     RUN_TEST(test_insertion_sort_array);

@@ -1,6 +1,6 @@
 # Code directories and binary file name
 _BINARY=main_ex1
-CODEDIRS=src src/lib
+CODEDIRS=src/ex1 src/ex1/lib
 BUILD=build
 BIN=bin
 
@@ -37,8 +37,8 @@ $(BUILD)/%.o: src/lib/%.c | $(BUILD)
 
 # Unit testing
 test: $(BIN)
-	$(CC) src/lib/mbi_sort.c src/test/unity/unity.c src/test/sort_test.c -o $(BIN)/test
-	./bin/test
+	$(CC) src/ex1/lib/mbi_sort.c resources/C/Unity/unity.c src/tests/test_ex1/sort_test.c -o $(BIN)/test_ex1
+	./bin/test_ex1
 
 
 # General use
