@@ -12,7 +12,7 @@ static int binary_search(void *, size_t, int (*)(const void *, const void*), int
 
 void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t k, int (*compar)(const void*, const void*))
 {
-    merge_sort(base, size, k, compar, 0, nitems - 1);
+    _merge_binary_insertion_sort(base, size, k, compar, 0, nitems - 1);
 }
 
 static void _merge_binary_insertion_sort(void *base, size_t size, size_t k, int (*compar)(const void*, const void*), int l, int r)
