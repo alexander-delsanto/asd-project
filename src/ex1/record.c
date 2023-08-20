@@ -62,7 +62,7 @@ static int compare_record_string_field(const void *string1_p, const void *string
 
 static void print_record_to_file(FILE *outfile, Record *record, size_t n_records)
 {
-    for(int i = 0; i < n_records; i++)
+    for(size_t i = 0; i < n_records; i++)
         fprintf(outfile, "%d,%s,%d,%f\n", record[i].index, record[i].string_field,
             record[i].integer_field, record[i].double_field);
 }
