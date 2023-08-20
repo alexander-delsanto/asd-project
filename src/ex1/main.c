@@ -29,6 +29,8 @@ int main(int argc, char *argv[])
     field = atol(argv[4]);
 
     sort_records(infile, outfile, k, field);
+    fclose(infile);
+    fclose(outfile);
 
     exit(EXIT_SUCCESS);
 }
