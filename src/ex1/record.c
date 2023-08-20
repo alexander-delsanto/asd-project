@@ -1,4 +1,5 @@
 #include <string.h>
+#include <time.h>
 #include "lib/mbi_sort.h"
 #include "record.h"
 
@@ -137,6 +138,7 @@ void sort_records(FILE *infile, FILE *outfile, size_t k, size_t field)
     Record *infile_record;
     n_read_records = read_record(infile, &infile_record);
 
+    clock_t begin = clock();
     switch (field){
         case 3:
             dprintf(1, "Sorting records by double field...\n");
@@ -151,6 +153,9 @@ void sort_records(FILE *infile, FILE *outfile, size_t k, size_t field)
             merge_binary_insertion_sort((void *) infile_record, n_read_records, sizeof(Record), k, compare_record_string_field);
             break;
     }
+    clock_t end = clock();
+    double time_spent = (double) (end - begin) / CLOCKS_PER_SEC;
+    dprintf(1, "Records sorted in %.2f seconds.\n", time_spent);
     dprintf(1, "Creating sorted records file...\n");
     print_record_to_file(outfile, infile_record, n_read_records);
 
