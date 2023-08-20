@@ -1,8 +1,9 @@
 # Code directories and binary file name
 _BINARY=main_ex1
-CODEDIRS=src/ex1 src/ex1/lib
+CODEDIRS=. lib
 BUILD=build
 BIN=bin
+TESTDEP=../../resources/C/Unity/unity.c
 
 # Compiling setup
 CC=gcc
@@ -18,10 +19,11 @@ OBJECTS=$(foreach D,$(CODEDIRS), $(patsubst $(D)/%.c, $(BUILD)/%.o, $(wildcard $
 all: $(BINARY)
 
 $(BINARY): $(CFILES) | $(BIN)
-	$(CC) -o $@ $^
+	@echo -e Compiling $(_BINARY)...
+	@$(CC) -o $@ $^
 
 $(BIN):
-	mkdir -p $@
+	@mkdir -p $@
 
 # To generate object files in the build/ folder and link them
 # to create the executable replace $(CFILES) with $(OBJECTS) in
@@ -30,19 +32,19 @@ $(BUILD):
 	mkdir -p $@
 
 $(BUILD)/%.o: src/%.c | $(BUILD)
-	$(CCOMPILE) -c $^ -o $@
+	@$(CCOMPILE) -c $^ -o $@
 
 $(BUILD)/%.o: src/lib/%.c | $(BUILD)
-	$(CCOMPILE) -c $^ -o $@
+	@$(CCOMPILE) -c $^ -o $@
 
 # Unit testing
 test: $(BIN)
-	$(CC) src/ex1/lib/mbi_sort.c resources/C/Unity/unity.c src/tests/test_ex1/sort_test.c -o $(BIN)/test_ex1
-	./bin/test_ex1
+	@$(CC) lib/mbi_sort.c ../tests/test_ex1/sort_test.c $(TESTDEP) -o $(BIN)/test_ex1
+	@./bin/test_ex1
 
 
 # General use
 recompile: clean all
 clean:
-	$(RM) -r $(BIN)
-	$(RM) -r $(BUILD)
+	@$(RM) -r $(BIN)
+	@$(RM) -r $(BUILD)
