@@ -91,19 +91,19 @@ static void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*
     free(temp);
 }
 
-static int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int left_index, int right_index, void *elem)
+static int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int l, int r, void *elem)
 {
-    if (right_index <= left_index) {
-        if(compar(elem, base + left_index * size) > 0)
-            return left_index + 1;
-        else return left_index;
+    if (r <= l) {
+        if(compar(elem, base + l * size) > 0)
+            return l + 1;
+        else return l;
     } else {
-        int m = (left_index + right_index) / 2;
+        int m = (l + r) / 2;
         int compare_res = compar(elem, base + m * size);
         if (compare_res == 0)
             return m + 1;
         if (compare_res > 0)
-            return binary_search(base, size, compar, m + 1, right_index, elem);
-        return binary_search(base, size, compar, left_index, m - 1, elem);
+            return binary_search(base, size, compar, m + 1, r, elem);
+        return binary_search(base, size, compar, l, m - 1, elem);
     }
 }
