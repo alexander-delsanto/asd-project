@@ -72,7 +72,6 @@ static void merge(void *base, size_t size, int (*compar)(const void*, const void
 
     free(left_arr);
     free(right_arr);
-    return;
 }
 
 static void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
@@ -89,6 +88,7 @@ static void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*
             k--;
         }
     }
+    free(temp);
 }
 
 static int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int left_index, int right_index, void *elem)
