@@ -4,10 +4,10 @@
 
 // Prototyes
 void merge_binary_insertion_sort(void *, size_t, size_t, size_t, int (*)(const void*, const void*));
-void merge_sort(void *, size_t, size_t, int (*)(const void*, const void*), int, int);
-void merge(void *, size_t, int (*)(const void*, const void*), int, int, int);
-void binary_insertion_sort(void *, size_t, size_t, int (*)(const void *, const void*));
-int binary_search(void *, size_t, int (*)(const void *, const void*), int, int, void *);
+static void _merge_binary_insertion_sort(void *, size_t, size_t, int (*)(const void*, const void*), int, int);
+static void merge(void *, size_t, int (*)(const void*, const void*), int, int, int);
+static void binary_insertion_sort(void *, size_t, size_t, int (*)(const void *, const void*));
+static int binary_search(void *, size_t, int (*)(const void *, const void*), int, int, void *);
 
 
 void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t k, int (*compar)(const void*, const void*))
@@ -15,7 +15,7 @@ void merge_binary_insertion_sort(void *base, size_t nitems, size_t size, size_t 
     merge_sort(base, size, k, compar, 0, nitems - 1);
 }
 
-void merge_sort(void *base, size_t size, size_t k, int (*compar)(const void*, const void*), int l, int r)
+static void _merge_binary_insertion_sort(void *base, size_t size, size_t k, int (*compar)(const void*, const void*), int l, int r)
 {
     if(l < r){
         size_t length = r - l + 1;
@@ -24,13 +24,13 @@ void merge_sort(void *base, size_t size, size_t k, int (*compar)(const void*, co
             return;
         }
         int m = (l + r) / 2;
-        merge_sort(base, size, k, compar, l, m);
-        merge_sort(base, size, k, compar, m + 1, r);
+        _merge_binary_insertion_sort(base, size, k, compar, l, m);
+        _merge_binary_insertion_sort(base, size, k, compar, m + 1, r);
         merge(base, size, compar, l, m, r);
     }
 }
 
-void merge(void *base, size_t size, int (*compar)(const void*, const void*), int l, int m, int r)
+static void merge(void *base, size_t size, int (*compar)(const void*, const void*), int l, int m, int r)
 {
     int i, j, k;
     int left_length = m - l + 1;
@@ -75,7 +75,7 @@ void merge(void *base, size_t size, int (*compar)(const void*, const void*), int
     return;
 }
 
-void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
+static void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*))
 {
     int i, j, k;
     void *temp = malloc(size);
@@ -91,7 +91,7 @@ void binary_insertion_sort(void *base, size_t nitems, size_t size, int (*compar)
     }
 }
 
-int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int left_index, int right_index, void *elem)
+static int binary_search(void *base, size_t size, int (*compar)(const void *, const void*), int left_index, int right_index, void *elem)
 {
     if (right_index <= left_index) {
         if(compar(elem, base + left_index * size) > 0)
