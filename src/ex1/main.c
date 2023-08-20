@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "lib/include/mbi_sort.h"
+#include "lib/mbi_sort.h"
 #include "record.h"
 
 int main(int argc, char *argv[])

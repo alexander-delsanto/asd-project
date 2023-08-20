@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "include/mbi_sort.h"
+#include "mbi_sort.h"
 
 // Prototyes
 void merge_binary_insertion_sort(void *, size_t, size_t, size_t, int (*)(const void*, const void*));
