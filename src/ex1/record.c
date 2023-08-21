@@ -1,7 +1,10 @@
 #include <string.h>
-#include <time.h>
 #include "lib/mbi_sort.h"
 #include "record.h"
+
+#ifdef BENCHMARK
+#include <time.h>
+#endif
 
 // Data structure used to load csv file
 typedef struct {
@@ -87,7 +90,9 @@ static size_t read_record(FILE *file, Record **file_record)
             dprintf(2, "main: unable to allocate memory\n");
             exit(EXIT_FAILURE);
         }
+#ifndef BENCHMARK
     dprintf(1, "Loading records from file...\n");
+#endif
     while(fgets(buffer, buffer_size, file) != NULL){
         current_read_line = malloc(buffer_size + 1);
         if(current_read_line == NULL){
@@ -137,27 +142,38 @@ void sort_records(FILE *infile, FILE *outfile, size_t k, size_t field)
     size_t n_read_records;
     Record *infile_record;
     n_read_records = read_record(infile, &infile_record);
-
+#ifdef BENCHMARK
     clock_t begin = clock();
+#endif
     switch (field){
         case 3:
+#ifndef BENCHMARK
             dprintf(1, "Sorting records by double field...\n");
+#endif
             merge_binary_insertion_sort((void *) infile_record, n_read_records, sizeof(Record), k, compare_record_double_field);
             break;
         case 2:
+#ifndef BENCHMARK
             dprintf(1, "Sorting records by integer field...\n");
+#endif
             merge_binary_insertion_sort((void *) infile_record, n_read_records, sizeof(Record), k, compare_record_int_field);
             break;
         default:
+#ifndef BENCHMARK
             dprintf(1, "Sorting records by string field...\n");
+#endif
             merge_binary_insertion_sort((void *) infile_record, n_read_records, sizeof(Record), k, compare_record_string_field);
             break;
     }
+#ifdef BENCHMARK
     clock_t end = clock();
     double time_spent = (double) (end - begin) / CLOCKS_PER_SEC;
-    dprintf(1, "Records sorted in %.2f seconds.\n", time_spent);
+    dprintf(1, "%.2f", time_spent);
+#endif
+#ifndef BENCHMARK
     dprintf(1, "Creating sorted records file...\n");
     print_record_to_file(outfile, infile_record, n_read_records);
+#endif
 
     free_record(infile_record, n_read_records);
 }

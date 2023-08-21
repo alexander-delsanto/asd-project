@@ -1,4 +1,5 @@
 # Code directories and binary file name
+.PHONY: benchmark test
 _BINARY=main_ex1
 CODEDIRS=. lib
 BUILD=build
@@ -20,7 +21,7 @@ all: $(BINARY)
 
 $(BINARY): $(CFILES) | $(BIN)
 	@echo -e Compiling $(_BINARY)...
-	@$(CC) -o $@ $^
+	@$(CCOMPILE) -o $@ $^
 
 $(BIN):
 	@mkdir -p $@
@@ -36,6 +37,12 @@ $(BUILD)/%.o: src/%.c | $(BUILD)
 
 $(BUILD)/%.o: src/lib/%.c | $(BUILD)
 	@$(CCOMPILE) -c $^ -o $@
+
+benchmark: $(CFILES) | $(BIN)
+	@echo -e Running benchamark...
+	@$(CC) -o $(BINARY)_benchmark -D BENCHMARK $^
+	@scripts/benchmark.sh
+	@echo -e Done.
 
 # Unit testing
 test: $(BIN)
