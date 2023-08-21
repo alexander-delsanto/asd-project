@@ -23,7 +23,7 @@ do
 		echo -n "$field,"
 		for (( i=1; i<=ntests; i++ ))
 		do
-			./bin/main_ex1_benchmark ../../resources/data/records.csv out.csv "$k" "$field"
+			./bin/main_ex1_benchmark ../../resources/data/records.csv NULL "$k" "$field"
 			if [ "$i" -lt "$ntests" ]
 			then
 				echo -n ","
