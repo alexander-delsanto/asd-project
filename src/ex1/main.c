@@ -20,17 +20,21 @@ int main(int argc, char *argv[])
         dprintf(2, "main: unable to open %s\n", argv[1]);
         exit(EXIT_FAILURE);
     }
+#ifndef BENCHMARK
     outfile = fopen(argv[2], "w");
     if(outfile == NULL){
         dprintf(2, "main: unable to open %s\n", argv[2]);
         exit(EXIT_FAILURE);
     }
+#endif
     k = atol(argv[3]);
     field = atol(argv[4]);
 
     sort_records(infile, outfile, k, field);
     fclose(infile);
+#ifndef BENCHMARK
     fclose(outfile);
+#endif
 
     exit(EXIT_SUCCESS);
 }
