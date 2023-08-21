@@ -3,3 +3,6 @@ bin
 data
 build
 docs/docs*
+*.csv
+*.log
+.vscode
