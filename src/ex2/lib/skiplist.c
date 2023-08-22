@@ -28,3 +28,21 @@ void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const
     (*list)[0].max_height = max_height;
     (*list)[0].compare = compar;
 }
+void insert_skiplist(struct SkipList *list, void *item)
+{
+    struct Node *new = create_node(item, random_level(list->max_height));
+    if(new->size > list->max_level)
+        list->max_level = new->size;
+    struct Node **x = list->heads;
+    for(int k = list->max_level - 1; k >= 0; k--){
+        if(x[k] == NULL || (list->compare(item, x[k]->item) < 0)){
+            if(k < new->size){
+                new->next[k] = x[k];
+                x[k] = new;
+            }
+        }else{
+            x = x[k]->next;
+            k++;
+        }
+    }
+}
