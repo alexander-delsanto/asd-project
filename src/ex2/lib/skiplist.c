@@ -1,7 +1,20 @@
 #include "skiplist.h"
 #include <stdio.h>
+#include <time.h>
+
+#define RANDOM (rand()/(double)RAND_MAX)
+
+size_t random_level(size_t max_height)
+{
+    size_t lvl = 1;
+
+    while(RANDOM < 0.5 && lvl < max_height)
+        lvl += 1;
+    return lvl;
+}
 void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const void*, const void*))
 {
+    srand(time(NULL));
     if(*list != NULL){
         fprintf(stderr, "new_skiplist: the list already exists.\n");
         exit(EXIT_FAILURE);
