@@ -55,3 +55,18 @@ void insert_skiplist(struct SkipList *list, void *item)
         }
     }
 }
+
+const void* search_skiplist(struct SkipList *list, void *item)
+{
+    struct Node **x = list->heads;
+    for(int i = list->max_level; i > 0; i--){
+        while(x[i]->next[i] != NULL && (list->compare(x[i]->next[i]->item, item) <= 0)){
+            x = x[i]->next;
+        }
+    }
+    if(list->compare(x[0]->item, item) == 0)
+        return x[0]->item;
+    else
+        return NULL;
+}
+
