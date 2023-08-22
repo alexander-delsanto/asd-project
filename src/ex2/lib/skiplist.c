@@ -12,6 +12,15 @@ size_t random_level(size_t max_height)
         lvl += 1;
     return lvl;
 }
+
+struct Node * create_node(void *item, size_t size)
+{
+    struct Node *new_node = malloc(sizeof(struct Node));
+    new_node->next = malloc(sizeof(new_node) * size);
+    new_node->size = size;
+    new_node->item = item;
+}
+
 void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const void*, const void*))
 {
     srand(time(NULL));
