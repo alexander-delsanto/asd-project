@@ -37,6 +37,9 @@ void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const
     (*list)[0].max_height = max_height;
     (*list)[0].compare = compar;
 }
+
+void clear_skiplist(struct SkipList **list);
+
 void insert_skiplist(struct SkipList *list, void *item)
 {
     struct Node *new = create_node(item, random_level(list->max_height));
