@@ -16,7 +16,7 @@ size_t random_level(size_t max_height)
 struct Node * create_node(void *item, size_t size)
 {
     struct Node *new_node = malloc(sizeof(struct Node));
-    new_node->next = malloc(sizeof(new_node) * size);
+    new_node->next = calloc(size, sizeof(new_node));
     new_node->size = size;
     new_node->item = item;
     return new_node;
@@ -30,7 +30,7 @@ void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const
         fprintf(stderr, "new_skiplist: unable to allocate memory.\n");
         exit(EXIT_FAILURE);
     }
-    (*list)->heads = malloc(sizeof(*list) * max_height);
+    (*list)->heads = calloc(max_height, sizeof(*list));
     (*list)->max_height = max_height;
     (*list)->compare = compar;
 }
