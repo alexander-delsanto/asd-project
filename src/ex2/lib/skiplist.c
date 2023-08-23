@@ -17,6 +17,10 @@ struct Node * create_node(void *item, size_t size)
 {
     struct Node *new_node = malloc(sizeof(struct Node));
     new_node->next = calloc(size, sizeof(new_node));
+    if(new_node == NULL || new_node->next == NULL){
+        fprintf(stderr, "create_node: unable to allocate memory.\n");
+        exit(EXIT_FAILURE);
+    }
     new_node->size = size;
     new_node->item = item;
     return new_node;
