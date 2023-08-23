@@ -19,6 +19,7 @@ struct Node * create_node(void *item, size_t size)
     new_node->next = malloc(sizeof(new_node) * size);
     new_node->size = size;
     new_node->item = item;
+    return new_node;
 }
 
 void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const void*, const void*))
@@ -46,9 +47,9 @@ void insert_skiplist(struct SkipList *list, void *item)
     if(new->size > list->max_level)
         list->max_level = new->size;
     struct Node **x = list->heads;
-    for(int k = list->max_level - 1; k >= 0; k--){
+    for(int k = (int)list->max_level - 1; k >= 0; k--){
         if(x[k] == NULL || (list->compare(item, x[k]->item) < 0)){
-            if(k < new->size){
+            if(k < (int)new->size){
                 new->next[k] = x[k];
                 x[k] = new;
             }
