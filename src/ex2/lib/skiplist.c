@@ -34,9 +34,9 @@ void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const
         fprintf(stderr, "new_skiplist: unable to allocate memory.\n");
         exit(EXIT_FAILURE);
     }
-    (*list)[0].heads = malloc(sizeof(*list) * max_height);
-    (*list)[0].max_height = max_height;
-    (*list)[0].compare = compar;
+    (*list)->heads = malloc(sizeof(*list) * max_height);
+    (*list)->max_height = max_height;
+    (*list)->compare = compar;
 }
 
 void clear_skiplist(struct SkipList **list)
