@@ -25,10 +25,6 @@ struct Node * create_node(void *item, size_t size)
 void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const void*, const void*))
 {
     srand(time(NULL));
-    if(*list != NULL){
-        fprintf(stderr, "new_skiplist: the list already exists.\n");
-        exit(EXIT_FAILURE);
-    }
     *list = malloc(sizeof(struct SkipList));
     if(*list == NULL){
         fprintf(stderr, "new_skiplist: unable to allocate memory.\n");
