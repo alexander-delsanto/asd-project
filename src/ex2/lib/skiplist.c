@@ -39,7 +39,17 @@ void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const
     (*list)[0].compare = compar;
 }
 
-void clear_skiplist(struct SkipList **list);
+void clear_skiplist(struct SkipList **list)
+{
+    struct Node *curr = (*list)->heads[0];
+    for(struct Node *n = curr; n != NULL; n = curr){
+        curr = n->next[0];
+        free(n->next);
+        free(n);
+    }
+    free((*list)->heads);
+    free(*list);
+}
 
 void insert_skiplist(struct SkipList *list, void *item)
 {
