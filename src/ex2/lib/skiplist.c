@@ -75,13 +75,11 @@ const void* search_skiplist(struct SkipList *list, void *item)
 {
     struct Node **x = list->heads;
     for(ssize_t i = list->max_level - 1; i >= 0; i--){
-        while(x[i]->next[i] != NULL && (list->compare(x[i]->next[i]->item, item) <= 0)){
+        while(x[i] != NULL && (list->compare(x[i]->item, item) < 0)){
             x = x[i]->next;
         }
     }
-    if(list->compare(x[0]->item, item) == 0)
+    if(x[0] != NULL && list->compare(x[0]->item, item) == 0)
         return x[0]->item;
-    else
-        return NULL;
+    return NULL;
 }
-
