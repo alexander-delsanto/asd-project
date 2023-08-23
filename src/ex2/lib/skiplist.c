@@ -56,10 +56,11 @@ void insert_skiplist(struct SkipList *list, void *item)
     struct Node *new = create_node(item, random_level(list->max_height));
     if(new->size > list->max_level)
         list->max_level = new->size;
+
     struct Node **x = list->heads;
-    for(int k = (int)list->max_level - 1; k >= 0; k--){
+    for(ssize_t k = list->max_level - 1; k >= 0; k--){
         if(x[k] == NULL || (list->compare(item, x[k]->item) < 0)){
-            if(k < (int)new->size){
+            if(k < (ssize_t)new->size){
                 new->next[k] = x[k];
                 x[k] = new;
             }
@@ -73,7 +74,7 @@ void insert_skiplist(struct SkipList *list, void *item)
 const void* search_skiplist(struct SkipList *list, void *item)
 {
     struct Node **x = list->heads;
-    for(int i = list->max_level; i > 0; i--){
+    for(ssize_t i = list->max_level - 1; i >= 0; i--){
         while(x[i]->next[i] != NULL && (list->compare(x[i]->next[i]->item, item) <= 0)){
             x = x[i]->next;
         }
