@@ -2,6 +2,7 @@
 #define _SKIPLIST_H
 
 #include <stdlib.h>
+#include <unistd.h>
 
 struct SkipList {
     struct Node **heads;
