@@ -49,6 +49,7 @@ void clear_skiplist(struct SkipList **list)
     }
     free((*list)->heads);
     free(*list);
+    *list = NULL;
 }
 
 void insert_skiplist(struct SkipList *list, void *item)
