@@ -1,5 +1,5 @@
-#include "../lib/skiplist.h"
-#include "../lib/skiplist_utils.h"
+#include "../../ex2/lib/skiplist.h"
+#include "../../ex2/lib/skiplist_utils.h"
 #include "../../../resources/C/Unity/unity.h"
 
 int compare_int(const void *int1_pointer, const void *int2_pointer)
