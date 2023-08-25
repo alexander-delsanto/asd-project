@@ -32,7 +32,7 @@ void skiplist_print_int(struct SkipList *list)
         exit(EXIT_FAILURE);
     }
     for(size_t i = 0; i < list->max_level; i++){
-        printf("level: %d\n", i+1);
+        printf("level: %ld\n", i+1);
         for(struct Node *n = list->heads[i]; n != NULL; n = n->next[i]){
             printf("[%d]", *(int*)n->item);
             if(n->next[i] != NULL)
