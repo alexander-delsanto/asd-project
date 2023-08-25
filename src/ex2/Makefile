@@ -1,5 +1,5 @@
 # Code directories and binary file name
-.PHONY: benchmark test
+.PHONY: test
 _BINARY=main_ex2
 CODEDIRS=. lib
 BUILD=build
@@ -15,13 +15,14 @@ CCOMPILE=$(CC) $(CFLAGS)
 BINARY=$(addprefix $(BIN)/, $(_BINARY))
 CFILES=$(foreach D,$(CODEDIRS),$(wildcard $(D)/*.c))
 OBJECTS=$(foreach D,$(CODEDIRS), $(patsubst $(D)/%.c, $(BUILD)/%.o, $(wildcard $(D)/*.c)))
+TESTFILES=$(foreach D,lib,$(wildcard $(D)/*.c)) ../tests/test_ex2/skiplist_test.c
 
 # Main
 all: $(BINARY)
 
 $(BINARY): $(CFILES) | $(BIN)
 	@echo -e Compiling $(_BINARY)...
-	$(CCOMPILE) -o $@ $^
+	@$(CCOMPILE) -o $@ $^
 
 $(BIN):
 	@mkdir -p $@
@@ -38,16 +39,10 @@ $(BUILD)/%.o: src/%.c | $(BUILD)
 $(BUILD)/%.o: src/lib/%.c | $(BUILD)
 	@$(CCOMPILE) -c $^ -o $@
 
-benchmark: $(CFILES) | $(BIN)
-	@echo -e Running benchamark...
-	@$(CC) -o $(BINARY)_benchmark -D BENCHMARK $^
-	@scripts/benchmark.sh
-	@echo -e Done.
-
 # Unit testing
 test: $(BIN)
-	@$(CC) lib/mbi_sort.c ../tests/test_ex1/sort_test.c $(TESTDEP) -o $(BIN)/test_ex1
-	@./bin/test_ex1
+	@$(CC) $(TESTFILES) $(TESTDEP) -o $(BIN)/test_ex2
+	@./bin/test_ex2
 
 
 # General use
