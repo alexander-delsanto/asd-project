@@ -13,3 +13,8 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
         this.comparator = comparator;
         this.elementsSet = new HashSet<>();
     }
+
+    @Override
+    public boolean empty() {
+        return heap.isEmpty();
+    }
