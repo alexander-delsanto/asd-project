@@ -6,12 +6,12 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
 
     private final ArrayList<E> heap;
     private final Comparator<E> comparator;
-    private final HashSet<E> elementsSet;
+    private final HashMap<E, Integer> elementsMap;
 
     public PriorityQueue(Comparator<E> comparator) {
         this.heap = new ArrayList<>();
         this.comparator = comparator;
-        this.elementsSet = new HashSet<>();
+        this.elementsMap = new HashMap<>();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
 
     @Override
     public boolean contains(E e) {
-        return elementsSet.contains(e);
+        return elementsMap.containsKey(e);
     }
 
     @Override
@@ -48,26 +48,31 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
         if(empty())
             throw new NoSuchElementException("pop: priority queue is empty.");
 
-        elementsSet.remove(heap.get(0));
-        Collections.swap(heap, 0, getSize() - 1);
-        heap.remove(getSize() - 1);
-        fixHeapDown(0);
+        int lastIndex = getSize() - 1;
+        swapAndMapElements(0, lastIndex);
+        elementsMap.remove(heap.get(lastIndex));
+        heap.remove(lastIndex);
+        if(getSize() > 1)
+            fixHeapDown(0);
     }
 
     @Override
     public boolean remove(E e) {
-        if(!elementsSet.contains(e))
+        if(!contains(e))
             return false;
-        int indexToRemove = heap.indexOf(e);
+        int indexToRemove = elementsMap.get(e);
         int lastIndex = getSize() - 1;
         if(indexToRemove != lastIndex)
-            Collections.swap(heap, indexToRemove, lastIndex);
+            swapAndMapElements(indexToRemove, lastIndex);
         heap.remove(lastIndex);
-        elementsSet.remove(e);
+        elementsMap.remove(e);
 
         if(indexToRemove < getSize()){
-            fixHeapUp(indexToRemove);
-            fixHeapDown(indexToRemove);
+            if(indexToRemove > 0 && compareElements(indexToRemove, getParentIndex(indexToRemove)) < 0) {
+                fixHeapUp(indexToRemove);
+            } else {
+                fixHeapDown(indexToRemove);
+            }
         }
         return true;
     }
@@ -89,7 +94,7 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
                 smallestElIndex = getSmallestElementIndex(currentIndex, leftChildIndex);
             }else break;
             if(compareElements(smallestElIndex, currentIndex) < 0){
-                Collections.swap(heap, smallestElIndex, currentIndex);
+                swapAndMapElements(smallestElIndex, currentIndex);
                 currentIndex = smallestElIndex;
             } else break;
         }
@@ -99,7 +104,7 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
         while(currentIndex > 0){
             int parentIndex = getParentIndex(currentIndex);
             if(compareElements(currentIndex, parentIndex) < 0){
-                    Collections.swap(heap, currentIndex, parentIndex);
+                    swapAndMapElements(currentIndex, parentIndex);
                     currentIndex = parentIndex;
             } else break;
         }
@@ -118,7 +123,13 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
         return heap.size();
     }
 
-    private int compareElements(int indexElement1, int indexElement2){
+    private void swapAndMapElements(int indexElement1, int indexElement2) {
+        Collections.swap(heap, indexElement1, indexElement2);
+        elementsMap.put(heap.get(indexElement1), indexElement1);
+        elementsMap.put(heap.get(indexElement2), indexElement2);
+    }
+
+    private int compareElements(int indexElement1, int indexElement2) {
         return comparator.compare(heap.get(indexElement1), heap.get(indexElement2));
     }
 
