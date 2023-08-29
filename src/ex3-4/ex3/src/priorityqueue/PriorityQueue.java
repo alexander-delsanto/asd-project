@@ -21,21 +21,13 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
 
     @Override
     public boolean push(E e) {
-        if(elementsSet.contains(e))
+        if(contains(e))
             return false;
         heap.add(e);
-        elementsSet.add(e);
         int currentIndex = getSize() - 1;
-        if(compareElements(currentIndex, getParentIndex(currentIndex)) < 0) {
-            while (currentIndex > 0) {
-                int parentIndex = getParentIndex(currentIndex);
-                if (compareElements(parentIndex, currentIndex) <= 0) {
-                    break;
-                }
-                Collections.swap(heap, currentIndex, parentIndex);
-                currentIndex = parentIndex;
-            }
-        }
+        elementsMap.put(e, currentIndex);
+        if(compareElements(currentIndex, getParentIndex(currentIndex)) < 0)
+            fixHeapUp(currentIndex);
         return true;
     }
 
