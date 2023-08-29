@@ -68,6 +68,25 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
         }
     }
 
+    private void fixHeapUp(int currentIndex){
+        while(currentIndex > 0){
+            int parentIndex = getParentIndex(currentIndex);
+            if(compareElements(currentIndex, parentIndex) < 0){
+                    Collections.swap(heap, currentIndex, parentIndex);
+                    currentIndex = parentIndex;
+            } else break;
+        }
+    }
+
+    @Override
+    public String toString() {
+        String heapString = "";
+        for (E e : heap) {
+            System.out.print(e + " ");
+        }
+        return heapString;
+    }
+
     public int getSize() {
         return heap.size();
     }
