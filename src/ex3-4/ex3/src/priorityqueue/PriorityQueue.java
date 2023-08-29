@@ -109,11 +109,11 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
 
     @Override
     public String toString() {
-        String heapString = "";
+        StringBuilder heapString = new StringBuilder();
         for (E e : heap) {
-            System.out.print(e + " ");
+            heapString.append(e).append(" ");
         }
-        return heapString;
+        return heapString.toString();
     }
 
     public int getSize() {
