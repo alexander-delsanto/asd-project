@@ -62,6 +62,24 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
         fixHeapDown(0);
     }
 
+    @Override
+    public boolean remove(E e) {
+        if(!elementsSet.contains(e))
+            return false;
+        int indexToRemove = heap.indexOf(e);
+        int lastIndex = getSize() - 1;
+        if(indexToRemove != lastIndex)
+            Collections.swap(heap, indexToRemove, lastIndex);
+        heap.remove(lastIndex);
+        elementsSet.remove(e);
+
+        if(indexToRemove < getSize()){
+            fixHeapUp(indexToRemove);
+            fixHeapDown(indexToRemove);
+        }
+        return true;
+    }
+
     private void fixHeapDown(int currentIndex){
         while(true){
             int smallestElIndex = currentIndex;
