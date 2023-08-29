@@ -18,3 +18,35 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
     public boolean empty() {
         return heap.isEmpty();
     }
+
+    @Override
+    public boolean push(E e) {
+        if(elementsSet.contains(e))
+            return false;
+        heap.add(e);
+        elementsSet.add(e);
+        int currentIndex = getSize() - 1;
+        if(compareElements(currentIndex, getParentIndex(currentIndex)) < 0) {
+            while (currentIndex > 0) {
+                int parentIndex = getParentIndex(currentIndex);
+                if (compareElements(parentIndex, currentIndex) <= 0) {
+                    break;
+                }
+                Collections.swap(heap, currentIndex, parentIndex);
+                currentIndex = parentIndex;
+            }
+        }
+        return true;
+    }
+
+    public int getSize() {
+        return heap.size();
+    }
+
+    private int compareElements(int indexElement1, int indexElement2){
+        return comparator.compare(heap.get(indexElement1), heap.get(indexElement2));
+    }
+
+    private int getParentIndex(int currentIndex){
+        return (currentIndex - 1) / 2;
+    }
