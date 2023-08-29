@@ -72,6 +72,12 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
         return true;
     }
 
+    public boolean changePriority(E oldElement, E newElement) {
+            if(!remove(oldElement))
+                return false;
+            return push(newElement);
+    }
+
     private void fixHeapDown(int currentIndex){
         while(true){
             int smallestElIndex = currentIndex;
