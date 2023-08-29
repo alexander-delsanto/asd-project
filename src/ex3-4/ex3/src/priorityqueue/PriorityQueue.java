@@ -51,6 +51,17 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
         return heap.get(0);
     }
 
+    @Override
+    public void pop() {
+        if(empty())
+            throw new NoSuchElementException("pop: priority queue is empty.");
+
+        elementsSet.remove(heap.get(0));
+        Collections.swap(heap, 0, getSize() - 1);
+        heap.remove(getSize() - 1);
+        fixHeapDown(0);
+    }
+
     private void fixHeapDown(int currentIndex){
         while(true){
             int smallestElIndex = currentIndex;
