@@ -51,6 +51,23 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
         return heap.get(0);
     }
 
+    private void fixHeapDown(int currentIndex){
+        while(true){
+            int smallestElIndex = currentIndex;
+            int leftChildIndex = getLeftChildIndex(currentIndex);
+            int rightChildIndex = getRightChildIndex(currentIndex);
+            if(rightChildIndex < getSize()){
+                smallestElIndex = getSmallestElementIndex(leftChildIndex, rightChildIndex);
+            }else if(leftChildIndex < getSize()){
+                smallestElIndex = getSmallestElementIndex(currentIndex, leftChildIndex);
+            }else break;
+            if(compareElements(smallestElIndex, currentIndex) < 0){
+                Collections.swap(heap, smallestElIndex, currentIndex);
+                currentIndex = smallestElIndex;
+            } else break;
+        }
+    }
+
     public int getSize() {
         return heap.size();
     }
@@ -62,3 +79,16 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
     private int getParentIndex(int currentIndex){
         return (currentIndex - 1) / 2;
     }
+
+    private int getLeftChildIndex(int parentIndex){
+        return parentIndex * 2 + 1;
+    }
+
+    private int getRightChildIndex(int parentIndex){
+        return parentIndex * 2 + 2;
+    }
+
+    private int getSmallestElementIndex(int indexElement1, int indexElement2){
+        return (compareElements(indexElement1, indexElement2) < 0) ? indexElement1 : indexElement2;
+    }
+}
