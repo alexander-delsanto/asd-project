@@ -39,6 +39,18 @@ public class PriorityQueue<E> implements AbstractQueue<E>{
         return true;
     }
 
+    @Override
+    public boolean contains(E e) {
+        return elementsSet.contains(e);
+    }
+
+    @Override
+    public E top() {
+        if(empty())
+            throw new NoSuchElementException("top: priority queue is empty.");
+        return heap.get(0);
+    }
+
     public int getSize() {
         return heap.size();
     }
