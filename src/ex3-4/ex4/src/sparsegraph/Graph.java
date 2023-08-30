@@ -14,4 +14,15 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
         this.labelled = labelled;
         adjacencyMap = new HashMap<>();
     }
+
+    @Override
+    public boolean isDirected() {
+        return directed;
+    }
+
+    @Override
+    public boolean isLabelled() {
+        return labelled;
+    }
+
 }
