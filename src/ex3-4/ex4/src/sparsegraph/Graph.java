@@ -25,4 +25,11 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
         return labelled;
     }
 
+    @Override
+    public boolean addNode(V a) {
+        if(containsNode(a))
+            return false;
+        adjacencyMap.put(a, new HashMap<V,L>());
+        return true;
+    }
 }
