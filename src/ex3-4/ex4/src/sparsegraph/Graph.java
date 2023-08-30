@@ -81,6 +81,20 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
         return true;
     }
 
+    @Override
+    public boolean removeEdge(V a, V b) {
+        if(containsEdge(a, b)) {
+            if(directed){
+                getNeighboursMap(a).remove(b);
+            }else {
+                getNeighboursMap(a).remove(b);
+                getNeighboursMap(b).remove(a);
+            }
+            return true;
+        }
+        return false;
+    }
+
     private HashMap<V,L> getNeighboursMap(V a) {
         return adjacencyMap.get(a);
     }
