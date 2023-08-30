@@ -95,6 +95,21 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
         return false;
     }
 
+    @Override
+    public int numNodes() {
+        return adjacencyMap.size();
+    }
+
+    @Override
+    public int numEdges() {
+        int numEdges = 0;
+        for(V node : getNodes())
+            numEdges += getNeighboursMap(node).size();
+        if(!directed)
+            numEdges /= 2;
+        return numEdges;
+    }
+
     private HashMap<V,L> getNeighboursMap(V a) {
         return adjacencyMap.get(a);
     }
