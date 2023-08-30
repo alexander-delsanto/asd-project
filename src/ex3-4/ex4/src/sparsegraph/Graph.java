@@ -32,6 +32,27 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
         adjacencyMap.put(a, new HashMap<V,L>());
         return true;
     }
+
+    @Override
+    public boolean addEdge(V a, V b, L o) {
+        if (containsEdge(a, b))
+            return false;
+        if (directed) {
+            if (labelled)
+                getNeighboursMap(a).put(b, o);
+            else
+                getNeighboursMap(a).put(b, null);
+        } else {
+            if (labelled) {
+                getNeighboursMap(a).put(b, o);
+                getNeighboursMap(b).put(a, o);
+            } else {
+                getNeighboursMap(a).put(b, null);
+                getNeighboursMap(b).put(a, null);
+            }
+        }
+        return true;
+    }
     private HashMap<V,L> getNeighboursMap(V a) {
         return adjacencyMap.get(a);
     }
