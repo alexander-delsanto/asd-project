@@ -32,4 +32,8 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
         adjacencyMap.put(a, new HashMap<V,L>());
         return true;
     }
+    private HashMap<V,L> getNeighboursMap(V a) {
+        return adjacencyMap.get(a);
+    }
+
 }
