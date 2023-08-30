@@ -110,6 +110,28 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
         return numEdges;
     }
 
+    @Override
+    public Collection<V> getNodes() {
+        return new HashSet<>(adjacencyMap.keySet());
+    }
+
+    @Override
+    public Collection<? extends AbstractEdge<V,L>> getEdges() {
+        HashSet<Edge<V,L>> edges = new HashSet<>();
+        for(Map.Entry<V,HashMap<V,L>> entry : adjacencyMap.entrySet()) {
+            V startNode = entry.getKey();
+            HashMap<V, L> neighbours = entry.getValue();
+            for(Map.Entry<V,L> edgeEntry : neighbours.entrySet()) {
+                V endNode = edgeEntry.getKey();
+                L label = edgeEntry.getValue();
+
+                if(directed || System.identityHashCode(startNode) <= System.identityHashCode(endNode))
+                    edges.add(new Edge<>(startNode, endNode, label));
+            }
+        }
+        return edges;
+    }
+
     private HashMap<V,L> getNeighboursMap(V a) {
         return adjacencyMap.get(a);
     }
