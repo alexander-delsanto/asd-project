@@ -132,6 +132,20 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
         return edges;
     }
 
+    @Override
+    public Collection<V> getNeighbours(V a) {
+        if(!containsNode(a))
+            return new HashSet<>();
+        return new HashSet<>(getNeighboursMap(a).keySet());
+    }
+
+    @Override
+    public L getLabel(V a, V b) {
+        if(!containsEdge(a, b))
+            return null;
+        return getNeighboursMap(a).get(b);
+    }
+
     private HashMap<V,L> getNeighboursMap(V a) {
         return adjacencyMap.get(a);
     }
