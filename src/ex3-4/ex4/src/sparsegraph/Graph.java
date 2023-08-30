@@ -69,6 +69,18 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
         }
         return false;
     }
+
+    @Override
+    public boolean removeNode(V a) {
+        if(!containsNode(a))
+            return false;
+        for(V node : getNodes()) {
+            removeEdge(node, a);
+        }
+        adjacencyMap.remove(a);
+        return true;
+    }
+
     private HashMap<V,L> getNeighboursMap(V a) {
         return adjacencyMap.get(a);
     }
