@@ -53,6 +53,22 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
         }
         return true;
     }
+
+    @Override
+    public boolean containsNode(V a) {
+        return adjacencyMap.containsKey(a);
+    }
+
+    @Override
+    public boolean containsEdge(V a, V b) {
+        if(containsNode(a) && containsNode(b)) {
+            if(directed)
+                return getNeighboursMap(a).containsKey(b);
+            else
+                return getNeighboursMap(a).containsKey(b) || getNeighboursMap(b).containsKey(a);
+        }
+        return false;
+    }
     private HashMap<V,L> getNeighboursMap(V a) {
         return adjacencyMap.get(a);
     }
