@@ -17,17 +17,13 @@ public class Prim {
         PriorityQueue<Edge<V,L>> priorityQueue = new PriorityQueue<>(Comparator.comparing(edge -> edge.getLabel().doubleValue()));
         HashSet<Edge<V,L>> graphEdges = new HashSet<>((Collection<Edge<V, L>>) graph.getEdges());
 
-
         while(visited.size() != allVertices.size()) {
             LinkedList<Edge<V,L>> minimumSpanningTree = new LinkedList<>();
             V start = allVertices.stream().filter(v -> !visited.contains(v)).findFirst().orElse(null);
             if (start == null) break;
             visited.add(start);
 
-            for (Edge<V,L> edge : graphEdges) {
-                if (edge.getStart().equals(start) || edge.getEnd().equals(start))
-                    priorityQueue.push(edge);
-            }
+            addAdjacentEdgesToPriorityQueue(priorityQueue, graphEdges, start);
 
             while (!priorityQueue.empty()) {
                 Edge<V,L> currentEdge = priorityQueue.top();
@@ -37,21 +33,24 @@ public class Prim {
                 if (visited.contains(source) && !visited.contains(dest)) {
                     minimumSpanningTree.add(currentEdge);
                     visited.add(dest);
-                    for (Edge<V,L> edge : graphEdges)
-                        if (edge.getStart().equals(dest) || edge.getEnd().equals(dest))
-                            priorityQueue.push(edge);
+                    addAdjacentEdgesToPriorityQueue(priorityQueue, graphEdges, dest);
                 } else if (!visited.contains(source) && visited.contains(dest)) {
                     minimumSpanningTree.add(currentEdge);
                     visited.add(source);
-
-                    for (Edge<V,L> edge : graphEdges)
-                        if (edge.getStart().equals(source) || edge.getEnd().equals(source))
-                            priorityQueue.push(edge);
+                    addAdjacentEdgesToPriorityQueue(priorityQueue, graphEdges, source);
                 }
             }
             minimumSpanningForest.addAll(minimumSpanningTree);
         }
         return minimumSpanningForest;
+    }
+
+    private static <V,L extends Number> void addAdjacentEdgesToPriorityQueue(PriorityQueue<Edge<V,L>> priorityQueue, HashSet<Edge<V,L>> graphEdges, V vertex) {
+        for (Edge<V,L> edge : graphEdges) {
+            if (edge.getStart().equals(vertex) || edge.getEnd().equals(vertex)) {
+                priorityQueue.push(edge);
+            }
+        }
     }
 
     public static void main(String[] args) {
