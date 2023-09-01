@@ -133,7 +133,7 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
     @Override
     public Collection<V> getNeighbours(V a) {
         if (!containsNode(a))
-            return new HashSet<>();
+            return new LinkedList<>();
         LinkedList<V> neighbours = new LinkedList<>();
         for (Edge<V, L> edge : adjacencyList.get(a)) {
             neighbours.add(edge.getEnd());
