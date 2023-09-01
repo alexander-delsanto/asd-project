@@ -6,6 +6,7 @@ import sparsegraph.*;
 import java.io.FileReader;
 import java.util.*;
 import java.io.BufferedReader;
+import java.text.DecimalFormat;
 
 public class Prim {
 
@@ -53,6 +54,20 @@ public class Prim {
         }
     }
 
+    public static void printForest(LinkedList<Edge<String, Double>> forest) {
+        forest.sort(Comparator.comparing(Edge::getLabel));
+        Double totEdgeWeight = 0.0;
+        for(Edge<String,Double> edge : forest) {
+            System.out.println(edge.getStart() + "," +  edge.getEnd() + "," + edge.getLabel());
+            totEdgeWeight += edge.getLabel();
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("#.###");
+        decimalFormat.setGroupingUsed(true);
+        decimalFormat.setGroupingSize(3);
+        System.out.println("Number of edges: " + forest.size());
+        System.out.println("Total edge weight: " + decimalFormat.format(totEdgeWeight / 1000) + " km");
+    }
+
     public static void main(String[] args) {
         if(args.length < 1) {
             System.err.println("Usage: java Prim <inputFile>");
@@ -68,15 +83,15 @@ public class Prim {
                 graph.addNode(row[0]);
                 graph.addNode(row[1]);
                 graph.addEdge(row[0], row[1], Double.valueOf(row[2]));
-                System.out.println(row[0] + " to " + row[1] + " dist: " + Double.valueOf(row[2]));
             }
-            graph.printEdges();
-            System.out.println(graph.numNodes());
-            System.out.println(graph.numEdges());
             reader.close();
         } catch(Exception e) {
             e.printStackTrace();
         }
+        @SuppressWarnings("unchecked")
+        LinkedList<Edge<String,Double>> minimumSpanningForest = (LinkedList<Edge<String, Double>>)minimumSpanningForest(graph);
+        printForest(minimumSpanningForest);
+        System.out.println("Number of nodes: " + graph.numNodes());
     }
 }
 
