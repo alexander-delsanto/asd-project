@@ -1,9 +1,20 @@
+/**
+ * @file skiplist.c
+ * @brief Skiplist implementation.
+ */
+
 #include "skiplist.h"
 #include <stdio.h>
 #include <time.h>
 
 #define RANDOM (rand()/(double)RAND_MAX)
 
+/**
+ * @brief Generate a random height for a new node.
+ *
+ * @param[in] max_height the maximum height for the skiplist.
+ * @return the randomly generated height.
+ */
 size_t random_level(size_t max_height)
 {
     size_t lvl = 1;
@@ -13,6 +24,13 @@ size_t random_level(size_t max_height)
     return lvl;
 }
 
+/**
+ * @brief Create a new node for the skiplist.
+ *
+ * @param[in] item the item to be stored in the node.
+ * @param[in] size the size in bytes of the node.
+ * @return a pointer to the newly created node.
+ */
 struct Node * create_node(void *item, size_t size)
 {
     struct Node *new_node = malloc(sizeof(struct Node));
@@ -26,6 +44,13 @@ struct Node * create_node(void *item, size_t size)
     return new_node;
 }
 
+/**
+ * @brief Initialize a new skip list.
+ *
+ * @param[out] list a pointer to the skiplist pointer that needs to be initialized.
+ * @param[in] max_height the maximum height for the skiplist.
+ * @param[in] compar a function pointer to compare two items in the skiplist.
+ */
 void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const void*, const void*))
 {
     srand(time(NULL));
@@ -39,6 +64,11 @@ void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const
     (*list)->compare = compar;
 }
 
+/**
+ * @brief Clear a skiplist and free the memory allocated to it's elements.
+ *
+ * @param[in,out] list a pointer to the skip list pointer that needs to be cleared.
+ */
 void clear_skiplist(struct SkipList **list)
 {
     struct Node *curr = (*list)->heads[0];
@@ -52,6 +82,12 @@ void clear_skiplist(struct SkipList **list)
     *list = NULL;
 }
 
+/**
+ * @brief Insert an item into the skiplist.
+ *
+ * @param[in,out] list a pointer to the skiplist.
+ * @param[in] item the item to be inserted.
+ */
 void insert_skiplist(struct SkipList *list, void *item)
 {
     struct Node *new = create_node(item, random_level(list->max_height));
@@ -72,6 +108,13 @@ void insert_skiplist(struct SkipList *list, void *item)
     }
 }
 
+/**
+ * @brief Search for an item in the skiplist.
+ *
+ * @param[in] list a pointer to the skiplist.
+ * @param[in] item the item to be searched for.
+ * @return a pointer to the item in the skiplist if found, NULL otherwise.
+ */
 const void* search_skiplist(struct SkipList *list, void *item)
 {
     struct Node **x = list->heads;
