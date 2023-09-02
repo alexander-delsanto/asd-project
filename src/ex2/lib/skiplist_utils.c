@@ -1,6 +1,17 @@
+/**
+ * @file skiplist_utils.c
+ * @brief Utility functions for managing and manipulating skiplists.
+ */
+
 #include "skiplist_utils.h"
 #include <stdio.h>
 
+/**
+ * @brief Check if a skiplist is empty.
+ *
+ * @param[in] list a pointer to the skiplist.
+ * @return returns 1 if the skiplist is empty, 0 otherwise.
+ */
 int skiplist_is_empty(struct SkipList *list)
 {
     if(list == NULL){
@@ -12,6 +23,12 @@ int skiplist_is_empty(struct SkipList *list)
     return 0;
 }
 
+/**
+ * @brief Calculates the length (number of nodes) of a skiplist.
+ *
+ * @param[in] list a pointer to the skiplist.
+ * @return the length of the skiplist.
+ */
 size_t skiplist_length(struct SkipList *list)
 {
     if(list == NULL){
@@ -25,6 +42,13 @@ size_t skiplist_length(struct SkipList *list)
     return length;
 }
 
+/**
+ * @brief Prints a skiplist of integer type items.
+ *
+ * @note This function assumes that the skiplist's item type is int.
+ *
+ * @param[in] list a pointer to the skiplist.
+ */
 void skiplist_print_int(struct SkipList *list)
 {
     if(list == NULL){
