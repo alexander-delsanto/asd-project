@@ -2,9 +2,11 @@ package priorityqueuetest;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import priorityqueue.PriorityQueue;
-import java.util.Comparator;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Comparator;
+import priorityqueue.PriorityQueue;
+
+
 
 class PriorityQueueTest {
 
