@@ -28,7 +28,7 @@ size_t random_level(size_t max_height)
  * @brief Create a new node for the skiplist.
  *
  * @param[in] item the item to be stored in the node.
- * @param[in] size the size in bytes of the node.
+ * @param[in] size the height of the node.
  * @return a pointer to the newly created node.
  */
 struct Node * create_node(void *item, size_t size)
