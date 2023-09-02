@@ -68,11 +68,11 @@ void test_mbi_sort_same_elements_array(void)
 {
     int a[] = {1, 1, 1, 1}, b[] = {1, 1, 1, 1};
     merge_binary_insertion_sort((void *) a, 4, sizeof(int), 0, compare_int);
-    TEST_ASSERT_EQUAL_INT_ARRAY(b, a, 1);
+    TEST_ASSERT_EQUAL_INT_ARRAY(b, a, 4);
     merge_binary_insertion_sort((void *) a, 4, sizeof(int), 3, compare_int);
-    TEST_ASSERT_EQUAL_INT_ARRAY(b, a, 1);
+    TEST_ASSERT_EQUAL_INT_ARRAY(b, a, 4);
     merge_binary_insertion_sort((void *) a, 4, sizeof(int), length, compare_int);
-    TEST_ASSERT_EQUAL_INT_ARRAY(b, a, 1);
+    TEST_ASSERT_EQUAL_INT_ARRAY(b, a, 4);
 }
 
 void test_mbi_sort_array(void)
