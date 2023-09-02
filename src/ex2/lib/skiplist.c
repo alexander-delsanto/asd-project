@@ -65,7 +65,7 @@ void new_skiplist(struct SkipList **list, size_t max_height, int (*compar)(const
 }
 
 /**
- * @brief Clear a skiplist and free the memory allocated to it's elements.
+ * @brief Clear a skiplist and free the memory allocated to its elements.
  *
  * @param[in,out] list a pointer to the skip list pointer that needs to be cleared.
  */
