@@ -75,19 +75,14 @@ public class Graph<V,L> implements AbstractGraph<V,L> {
     public boolean addEdge(V a, V b, L o) {
         if (containsEdge(a, b))
             return false;
+        if(!labelled)
+            o = null;
+
         if (directed) {
-            if (labelled)
-                getNeighboursMap(a).add(new Edge<>(a, b, o));
-            else
-                getNeighboursMap(a).add(new Edge<>(a, b, null));
+            getNeighboursMap(a).add(new Edge<>(a, b, o));
         } else {
-            if (labelled) {
-                getNeighboursMap(a).add(new Edge<>(a, b, o));
-                getNeighboursMap(b).add(new Edge<>(b, a, o));
-            } else {
-                getNeighboursMap(a).add(new Edge<>(a, b, null));
-                getNeighboursMap(b).add(new Edge<>(b, a, null));
-            }
+            getNeighboursMap(a).add(new Edge<>(a, b, o));
+            getNeighboursMap(b).add(new Edge<>(b, a, o));
         }
         return true;
     }
