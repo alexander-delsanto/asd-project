@@ -57,5 +57,12 @@ public class Edge<V,L> implements AbstractEdge<V,L>{
         return label;
     }
 
-
+    /**
+     * Returns a string representation of the edge.
+     *
+     * @return a string representation of the edge.
+     */
+    public String toString() {
+        return start + " -> " + end + ": " + label;
+    }
 }
