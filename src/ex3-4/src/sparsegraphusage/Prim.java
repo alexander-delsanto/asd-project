@@ -41,15 +41,35 @@ public class Prim {
         return minimumSpanningForest;
     }
 
-    private static <V,L extends Number> void addAdjacentEdgesToPriorityQueue(PriorityQueue<Edge<V,L>> priorityQueue, HashSet<Edge<V,L>> graphEdges, V vertex) {
-        for (Edge<V,L> edge : graphEdges) {
-            if (edge.getStart().equals(vertex) || edge.getEnd().equals(vertex)) {
-                priorityQueue.push(edge);
-            }
     private static <V,L extends Number> void addAdjacentToPriority(Graph<V, L> graph, PriorityQueue<Edge<V,L>> priorityQueue, V vertex){
         for(V next : graph.getNeighbours(vertex)){
             L label = graph.getLabel (vertex, next);
             priorityQueue.push(new Edge<>(vertex, next, label));
+        }
+    }
+
+    public static void printForestToFile(LinkedList<Edge<String, Double>> forest, String fileName) {
+        forest.sort(Comparator.comparing(Edge::getLabel));
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            Double totEdgeWeight = 0.0;
+
+            for (Edge<String, Double> edge : forest) {
+                writer.write(edge.getStart() + "," + edge.getEnd() + "," + edge.getLabel());
+                writer.newLine();
+                totEdgeWeight += edge.getLabel();
+            }
+
+            DecimalFormat decimalFormat = new DecimalFormat("#.###");
+            decimalFormat.setGroupingUsed(true);
+            decimalFormat.setGroupingSize(3);
+
+            writer.write("Number of edges: " + forest.size());
+            writer.newLine();
+            writer.write("Total edge weight: " + decimalFormat.format(totEdgeWeight / 1000) + " km");
+
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
         }
     }
 
