@@ -2,47 +2,42 @@ package sparsegraphusage;
 
 import priorityqueue.PriorityQueue;
 import sparsegraph.*;
-
-import java.io.FileReader;
+import java.io.*;
 import java.util.*;
-import java.io.BufferedReader;
 import java.text.DecimalFormat;
 
 public class Prim {
 
-    @SuppressWarnings("unchecked")
     public static <V, L extends Number> Collection<? extends AbstractEdge<V, L>> minimumSpanningForest(Graph<V, L> graph) {
         LinkedList<Edge<V,L>> minimumSpanningForest = new LinkedList<>();
         HashSet<V> visited = new HashSet<>();
         HashSet<V> allVertices = new HashSet<>(graph.getNodes());
         PriorityQueue<Edge<V,L>> priorityQueue = new PriorityQueue<>(Comparator.comparing(edge -> edge.getLabel().doubleValue()));
-        HashSet<Edge<V,L>> graphEdges = new HashSet<>((Collection<Edge<V, L>>) graph.getEdges());
 
-        while(visited.size() != allVertices.size()) {
+        while(visited.size() != allVertices.size()) { // use a for loop instead
             LinkedList<Edge<V,L>> minimumSpanningTree = new LinkedList<>();
             V start = allVertices.stream().filter(v -> !visited.contains(v)).findFirst().orElse(null);
             if (start == null) break;
+
             visited.add(start);
-
-            addAdjacentEdgesToPriorityQueue(priorityQueue, graphEdges, start);
-
+            addAdjacentToPriority(graph, priorityQueue, start);
             while (!priorityQueue.empty()) {
+
                 Edge<V,L> currentEdge = priorityQueue.top();
                 priorityQueue.pop();
-                V source = currentEdge.getStart();
-                V dest = currentEdge.getEnd();
-                if (visited.contains(source) && !visited.contains(dest)) {
-                    minimumSpanningTree.add(currentEdge);
-                    visited.add(dest);
-                    addAdjacentEdgesToPriorityQueue(priorityQueue, graphEdges, dest);
-                } else if (!visited.contains(source) && visited.contains(dest)) {
-                    minimumSpanningTree.add(currentEdge);
-                    visited.add(source);
-                    addAdjacentEdgesToPriorityQueue(priorityQueue, graphEdges, source);
-                }
+
+                V node = currentEdge.getEnd();
+                if (visited.contains(node))
+                    continue;
+                minimumSpanningTree.add(currentEdge);
+
+                visited.add(node);
+                allVertices.remove(node);
+                addAdjacentToPriority(graph, priorityQueue, node);
             }
             minimumSpanningForest.addAll(minimumSpanningTree);
         }
+
         return minimumSpanningForest;
     }
 
@@ -51,6 +46,10 @@ public class Prim {
             if (edge.getStart().equals(vertex) || edge.getEnd().equals(vertex)) {
                 priorityQueue.push(edge);
             }
+    private static <V,L extends Number> void addAdjacentToPriority(Graph<V, L> graph, PriorityQueue<Edge<V,L>> priorityQueue, V vertex){
+        for(V next : graph.getNeighbours(vertex)){
+            L label = graph.getLabel (vertex, next);
+            priorityQueue.push(new Edge<>(vertex, next, label));
         }
     }
 
@@ -86,7 +85,7 @@ public class Prim {
             }
             reader.close();
         } catch(Exception e) {
-            e.printStackTrace();
+            System.err.println("Error reading file: " + e.getMessage());
         }
         @SuppressWarnings("unchecked")
         LinkedList<Edge<String,Double>> minimumSpanningForest = (LinkedList<Edge<String, Double>>)minimumSpanningForest(graph);
