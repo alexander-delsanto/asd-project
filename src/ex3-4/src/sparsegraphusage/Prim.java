@@ -14,7 +14,7 @@ public class Prim {
         HashSet<V> allVertices = new HashSet<>(graph.getNodes());
         PriorityQueue<Edge<V,L>> priorityQueue = new PriorityQueue<>(Comparator.comparing(edge -> edge.getLabel().doubleValue()));
 
-        while(visited.size() != allVertices.size()) { // use a for loop instead
+        while(visited.size() != allVertices.size()) {
             LinkedList<Edge<V,L>> minimumSpanningTree = new LinkedList<>();
             V start = allVertices.stream().filter(v -> !visited.contains(v)).findFirst().orElse(null);
             if (start == null) break;
