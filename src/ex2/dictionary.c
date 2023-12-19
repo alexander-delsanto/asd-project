@@ -2,6 +2,11 @@
 #include "lib/skiplist.h"
 #include <string.h>
 
+#ifdef BENCHMARK
+#include <time.h>
+#endif
+
+
 #define BUFFER_SIZE 1024
 
 static int compare_string(const void *string_1, const void *string_2)
@@ -41,6 +46,9 @@ static struct SkipList * dictionary_to_skiplist(FILE *dictfile, size_t max_heigh
 
 void find_errors(FILE *dictfile, FILE *textfile, size_t max_height)
 {
+#ifdef BENCHMARK
+    clock_t begin = clock();
+#endif
     struct SkipList *dictionary = dictionary_to_skiplist(dictfile, max_height);
 
     int i = 0;
@@ -55,8 +63,15 @@ void find_errors(FILE *dictfile, FILE *textfile, size_t max_height)
             string_to_lowercase(buffer);
             char *s = strdup(buffer);
             if(search_skiplist(dictionary, (void *) s) == NULL)
+#ifndef BENCHMARK
                 printf("%s\n", s);
+#endif
             i = 0;
         }
     }
+#ifdef BENCHMARK
+    clock_t end = clock();
+    double time_spent = (double) (end - begin) / CLOCKS_PER_SEC;
+    dprintf(1, "%.5f", time_spent);
+#endif
 }

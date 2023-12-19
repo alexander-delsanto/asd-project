@@ -44,6 +44,11 @@ test: $(BIN)
 	@$(CC) $(TESTFILES) $(TESTDEP) -o $(BIN)/test_ex2
 	@./bin/test_ex2
 
+benchmark: $(CFILES) | $(BIN)
+	@echo -e Running benchamark...
+	@$(CC) -o $(BINARY)_benchmark -D BENCHMARK $^
+	@scripts/benchmark.sh
+	@echo -e Done.
 
 # General use
 recompile: clean all
